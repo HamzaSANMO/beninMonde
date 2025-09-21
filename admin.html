@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Benin Monde Sport</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0A2463;
+            --secondary-blue: #0077cc;
+            --dark-blue: #003a75;
+            --dark-gray: #333333;
+            --medium-gray: #666666;
+            --light-gray: #F3F4F6;
+            --white: #FFFFFF;
+            --black: #000000;
+            --accent: #FF5A09;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Admin - Mobile First */
+        .admin-header {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-header-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .admin-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-logo span {
+            color: var(--accent);
+        }
+
+        .mobile-menu-btn {
+            display: block;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .admin-nav {
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .admin-nav.active {
+            display: flex;
+        }
+
+        .admin-nav a {
+            color: var(--white);
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .admin-nav a:hover, .admin-nav a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Layout Admin */
+        .admin-container {
+            display: flex;
+            flex-direction: column;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* Sidebar Admin */
+        .admin-sidebar {
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: var(--box-shadow);
+            padding: 1rem 0;
+            transition: var(--transition);
+            overflow-x: auto;
+            display: none;
+        }
+
+        .admin-sidebar.active {
+            display: block;
+        }
+
+        .admin-sidebar-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0 1rem;
+        }
+
+        .admin-sidebar-item {
+            margin-bottom: 0;
+        }
+
+        .admin-sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.6rem 0.8rem;
+            color: var(--dark-gray);
+            border-radius: 5px;
+            transition: var(--transition);
+            white-space: nowrap;
+            font-size: 0.9rem;
+        }
+
+        .admin-sidebar-link:hover, .admin-sidebar-link.active {
+            background-color: var(--light-gray);
+            color: var(--primary-blue);
+        }
+
+        .admin-sidebar-link i {
+            width: 18px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* Main Content */
+        .admin-main {
+            flex: 1;
+            padding: 1.5rem 1rem;
+            background-color: #f8f9fa;
+        }
+
+        .admin-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .admin-section-header {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .admin-section-title {
+            font-size: 1.3rem;
+            color: var(--primary-blue);
+        }
+
+        /* Table Styles */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .admin-table th {
+            background-color: var(--light-gray);
+            font-weight: 600;
+        }
+
+        .admin-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        /* Form Styles */
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group.full-width {
+            width: 100%;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-gray);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(10, 36, 99, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: var(--white);
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--dark-blue);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: var(--white);
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: var(--black);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: var(--white);
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.7rem;
+            font-size: 0.8rem;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* Card Styles */
+        .admin-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            margin-bottom: 1.2rem;
+        }
+
+        .admin-card-header {
+            padding: 1rem;
+            background-color: var(--light-gray);
+            border-bottom: 1px solid #ddd;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .admin-card-body {
+            padding: 1.2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .stat-item h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-item p {
+            font-size: 0.85rem;
+            color: var(--medium-gray);
+        }
+
+        /* Image Upload */
+        .image-upload {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .image-upload:hover {
+            border-color: var(--primary-blue);
+        }
+
+        .image-upload i {
+            font-size: 1.8rem;
+            color: var(--medium-gray);
+            margin-bottom: 0.8rem;
+        }
+
+        .image-preview {
+            margin-top: 1rem;
+            max-width: 100%;
+            display: none;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--success);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Preview Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 15px;
+            border-radius: 10px;
+            width: 95%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-gray);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.6rem 1rem;
+            background: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Ad Spaces */
+        .ad-space-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--white);
+        }
+
+        .ad-space-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .ad-space-title {
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .ad-space-status {
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .status-active {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .status-inactive {
+            background-color: var(--medium-gray);
+            color: white;
+        }
+
+        .ad-space-preview {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed #ccc;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 576px) {
+            .admin-header-container {
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .admin-nav {
+                flex-direction: row;
+            }
+            
+            .admin-user {
+                margin-top: 0;
+                padding-top: 0;
+                border-top: none;
+                margin-left: auto;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .admin-container {
+                flex-direction: row;
+            }
+            
+            .admin-sidebar {
+                width: 220px;
+                display: block;
+                padding: 1.5rem 0;
+            }
+            
+            .admin-sidebar-menu {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .admin-main {
+                padding: 2rem;
+            }
+            
+            .admin-section-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .admin-form {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+            }
+            
+            .form-group.full-width {
+                grid-column: 1 / -1;
+            }
+            
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .admin-sidebar {
+                width: 250px;
+            }
+            
+            .admin-form {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container admin-header-container">
+            <div class="admin-header-top">
+                <div class="admin-logo">
+                    <i class="fas fa-cog"></i>
+                    <span>Admin</span> BeninMondeSport
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <nav class="admin-nav" id="adminNav">
+                <a href="#" class="active">Tableau de bord</a>
+                <a href="#">Site public</a>
+                <a href="#">Déconnexion</a>
+                
+                <div class="admin-user">
+                    <div class="admin-avatar">RA</div>
+                    <span>Romeo Aklozo</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Admin Container -->
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="admin-sidebar-menu">
+                <div class="admin-sidebar-item">
+                    <a href="#" class="admin-sidebar-link active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Tableau de bord
+                    </a>
+                </div>
+                <div class="admin-sidebar-item">
+                    <a href="#" class="admin-sidebar-link">
+                        <i class="fas fa-newspaper"></i>
+                        Articles
+                    </a>
+                </div>
+                <div class="admin-sidebar-item">
+                    <a href="#" class="admin-sidebar-link">
+                        <i class="fas fa-ad"></i>
+                        Espaces publicitaires
+                    </a>
+                </div>
+                <div class="admin-sidebar-item">
+                    <a href="#" class="admin-sidebar-link">
+                        <i class="fas fa-image"></i>
+                        Médias
+                    </a>
+                </div>
+                <div class="admin-sidebar-item">
+                    <a href="#" class="admin-sidebar-link">
+                        <i class="fas fa-users"></i>
+                        Administrateurs
+                    </a>
+                </div>
+                <div class="admin-sidebar-item">
+                    <a href="#" class="admin-sidebar-link">
+                        <i class="fas fa-chart-bar"></i>
+                        Statistiques
+                    </a>
+                </div>
+                <div class="admin-sidebar-item">
+                    <a href="#" class="admin-sidebar-link">
+                        <i class="fas fa-cog"></i>
+                        Paramètres
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Dashboard Section -->
+            <section class="admin-section">
+                <div class="admin-section-header">
+                    <h2 class="admin-section-title">Tableau de bord</h2>
+                    <div>
+                        <button class="btn btn-primary">Nouvel article</button>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        Statistiques du site
+                    </div>
+                    <div class="admin-card-body">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <h3>45</h3>
+                                <p>Articles publiés</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3>12</h3>
+                                <p>Articles en attente</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3>3</h3>
+                                <p>Administrateurs</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3>1,254</h3>
+                                <p>Visites aujourd'hui</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tabs Navigation -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="articles">Gestion des Articles</button>
+                <button class="tab-btn" data-tab="ad-spaces">Espaces Publicitaires</button>
+                <button class="tab-btn" data-tab="administrators">Administrateurs</button>
+            </div>
+
+            <!-- Articles Management Section -->
+            <div class="tab-content active" id="articles-tab">
+                <section class="admin-section">
+                    <div class="admin-section-header">
+                        <h2 class="admin-section-title">Gestion des Articles</h2>
+                        <div>
+                            <input type="text" class="form-control" placeholder="Rechercher un article..." style="max-width: 200px;">
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Titre</th>
+                                    <th>Auteur</th>
+                                    <th>Date</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Les Guépards du Bénin se qualifient</td>
+                                    <td>Romeo Aklozo</td>
+                                    <td>15/09/2023</td>
+                                    <td><span class="btn btn-success btn-sm">Publié</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary btn-sm">Éditer</button>
+                                            <button class="btn btn-warning btn-sm">Désactiver</button>
+                                            <button class="btn btn-danger btn-sm">Supprimer</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Interview exclusive avec la star du football</td>
+                                    <td>Romeo Aklozo</td>
+                                    <td>14/09/2023</td>
+                                    <td><span class="btn btn-warning btn-sm">Brouillon</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary btn-sm">Éditer</button>
+                                            <button class="btn btn-success btn-sm">Publier</button>
+                                            <button class="btn btn-danger btn-sm">Supprimer</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Le basketball béninois en pleine expansion</td>
+                                    <td>Romeo Aklozo</td>
+                                    <td>10/09/2023</td>
+                                    <td><span class="btn btn-success btn-sm">Publié</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary btn-sm">Éditer</button>
+                                            <button class="btn btn-warning btn-sm">Désactiver</button>
+                                            <button class="btn btn-danger btn-sm">Supprimer</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Add New Article Section -->
+                <section class="admin-section">
+                    <div class="admin-section-header">
+                        <h2 class="admin-section-title">Nouvel Article</h2>
+                        <div>
+                            <button class="btn btn-primary" onclick="previewArticle()">Aperçu</button>
+                        </div>
+                    </div>
+
+                    <form class="admin-form">
+                        <div class="form-group">
+                            <label class="form-label">Titre de l'article</label>
+                            <input type="text" class="form-control" placeholder="Entrez le titre de l'article">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Catégorie</label>
+                            <select class="form-select">
+                                <option value="">Sélectionnez une catégorie</option>
+                                <option value="football">Football</option>
+                                <option value="athletisme">Athlétisme</option>
+                                <option value="basketball">Basketball</option>
+                                <option value="autres">Autres sports</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Image principale</label>
+                            <div class="image-upload" onclick="document.getElementById('imageUpload').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Cliquez pour télécharger une image</p>
+                                <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                            </div>
+                            <div class="image-preview" id="imagePreview">
+                                <img src="" alt="Preview">
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label class="form-label">Contenu de l'article</label>
+                            <textarea class="form-control" rows="10" placeholder="Rédigez votre article ici..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Statut de publication</label>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span>Publier immédiatement</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width" style="text-align: right;">
+                            <button type="button" class="btn" style="margin-right: 10px;">Enregistrer comme brouillon</button>
+                            <button type="submit" class="btn btn-primary">Publier l'article</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+
+            <!-- Ad Spaces Management Section -->
+            <div class="tab-content" id="ad-spaces-tab">
+                <section class="admin-section">
+                    <div class="admin-section-header">
+                        <h2 class="admin-section-title">Gestion des Espaces Publicitaires</h2>
+                        <div>
+                            <button class="btn btn-primary">Nouvel espace</button>
+                        </div>
+                    </div>
+
+                    <div class="ad-space-card">
+                        <div class="ad-space-header">
+                            <div class="ad-space-title">Bannière Haut de Page (728x90)</div>
+                            <div class="ad-space-status status-active">Active</div>
+                        </div>
+                        <p>Espace pour bannière publicitaire en haut de page. Visible sur toutes les pages.</p>
+                        
+                        <div class="ad-space-preview">
+                            Aperçu de la bannière publicitaire (728x90)
+                        </div>
+                        
+                        <div class="admin-form">
+                            <div class="form-group">
+                                <label class="form-label">Code publicitaire</label>
+                                <textarea class="form-control" rows="4" placeholder="Collez le code publicitaire ici..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Statut</label>
+                                <select class="form-select">
+                                    <option value="active">Actif</option>
+                                    <option value="inactive">Inactif</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group full-width" style="text-align: right;">
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ad-space-card">
+                        <div class="ad-space-header">
+                            <div class="ad-space-title">Sidebar Right (300x250)</div>
+                            <div class="ad-space-status status-inactive">Inactive</div>
+                        </div>
+                        <p>Espace pour bannière publicitaire dans la sidebar droite. Visible sur les pages d'articles.</p>
+                        
+                        <div class="ad-space-preview">
+                            Aperçu de la bannière publicitaire (300x250)
+                        </div>
+                        
+                        <div class="admin-form">
+                            <div class="form-group">
+                                <label class="form-label">Code publicitaire</label>
+                                <textarea class="form-control" rows="4" placeholder="Collez le code publicitaire ici..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Statut</label>
+                                <select class="form-select">
+                                    <option value="active">Actif</option>
+                                    <option value="inactive" selected>Inactif</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group full-width" style="text-align: right;">
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ad-space-card">
+                        <div class="ad-space-header">
+                            <div class="ad-space-title">Entre les Articles (320x100)</div>
+                            <div class="ad-space-status status-active">Active</div>
+                        </div>
+                        <p>Espace pour bannière publicitaire entre les articles. Visible sur les pages de listing.</p>
+                        
+                        <div class="ad-space-preview">
+                            Aperçu de la bannière publicitaire (320x100)
+                        </div>
+                        
+                        <div class="admin-form">
+                            <div class="form-group">
+                                <label class="form-label">Code publicitaire</label>
+                                <textarea class="form-control" rows="4" placeholder="Collez le code publicitaire ici..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Statut</label>
+                                <select class="form-select">
+                                    <option value="active" selected>Actif</option>
+                                    <option value="inactive">Inactif</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group full-width" style="text-align: right;">
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Administrators Management Section -->
+            <div class="tab-content" id="administrators-tab">
+                <section class="admin-section">
+                    <div class="admin-section-header">
+                        <h2 class="admin-section-title">Gestion des Administrateurs</h2>
+                        <div>
+                            <button class="btn btn-primary">Nouvel admin</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Rôle</th>
+                                    <th>Date d'ajout</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Romeo Aklozo</td>
+                                    <td>romeo@beninmondesport.com</td>
+                                    <td>Super Admin</td>
+                                    <td>01/01/2023</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary btn-sm">Éditer</button>
+                                            <button class="btn btn-danger btn-sm">Supprimer</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Marie Lawson</td>
+                                    <td>marie@beninmondesport.com</td>
+                                    <td>Éditeur</td>
+                                    <td>15/03/2023</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary btn-sm">Éditer</button>
+                                            <button class="btn btn-danger btn-sm">Supprimer</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Paul Mensah</td>
+                                    <td>paul@beninmondesport.com</td>
+                                    <td>Éditeur</td>
+                                    <td>22/06/2023</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary btn-sm">Éditer</button>
+                                            <button class="btn btn-danger btn-sm">Supprimer</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2>Aperçu de l'article</h2>
+            <div style="border: 1px solid #ddd; padding: 20px; margin-top: 20px; border-radius: 8px;">
+                <h3>Titre de l'article</h3>
+                <p><strong>Auteur:</strong> Romeo Aklozo</p>
+                <p><strong>Date:</strong> 15 Septembre 2023</p>
+                <p><strong>Contenu:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eu ultricies lacinia, nunc nisl aliquam nisl, eu aliquam nisl nunc eu nisl.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle mobile menu
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('adminNav').classList.toggle('active');
+        });
+
+        // Toggle sidebar on mobile
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('adminSidebar').classList.toggle('active');
+        });
+
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Image preview functionality
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('imagePreview');
+                    preview.style.display = 'block';
+                    preview.querySelector('img').src = event.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Preview article modal
+        function previewArticle() {
+            document.getElementById('previewModal').style.display = 'block';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('previewModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('previewModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
