@@ -71,24 +71,43 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--white);
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            min-width: max-content;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+            margin-right: 15px;
         }
 
         .logo span {
             color: var(--accent);
         }
 
+        nav {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
         nav ul {
             display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         nav ul li {
-            margin-left: 25px;
+            margin: 0 12px;
         }
 
         nav ul li a {
@@ -97,6 +116,7 @@
             position: relative;
             transform: translateZ(0);
             color: var(--white);
+            white-space: nowrap;
         }
 
         nav ul li a:hover {
@@ -118,12 +138,18 @@
             width: 100%;
         }
 
+        .header-right {
+            display: flex;
+            align-items: center;
+            min-width: max-content;
+        }
+
         .search-icon {
             font-size: 1.2rem;
-            margin-left: 20px;
             cursor: pointer;
             transition: transform 0.3s ease;
             color: var(--white);
+            margin-left: 70px;
         }
 
         .search-icon:hover {
@@ -135,6 +161,7 @@
             cursor: pointer;
             font-size: 1.5rem;
             color: var(--white);
+            margin-left: 15px;
         }
 
         /* Hero Section avec animation 3D */
@@ -613,46 +640,84 @@
         }
 
         /* Contact Section */
-        .contact {
-            padding: 5rem 0;
-            background-color: var(--white);
-        }
+.contact {
+    padding: 5rem 0;
+    background-color: var(--white);
+}
 
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
 
-        .contact-form {
-            background-color: var(--light-gray);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
+.contact-form {
+    background-color: var(--light-gray);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    min-width: 0; /* Empêche le débordement */
+}
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+.form-group {
+    margin-bottom: 1.5rem;
+}
 
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
 
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-family: 'Roboto', sans-serif;
-        }
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box; /* Assure que le padding est inclus dans la largeur */
+}
 
-        .form-group textarea {
-            min-height: 150px;
-        }
+.form-group textarea {
+    min-height: 150px;
+    resize: vertical; /* Permet le redimensionnement vertical seulement */
+}
+
+/* Media Queries pour le responsive */
+@media (max-width: 768px) {
+    .contact-container {
+        grid-template-columns: 1fr; /* Passe sur une colonne */
+        gap: 2rem;
+    }
+    
+    .contact-form {
+        padding: 2rem; /* Garde le même padding */
+        width: 100%; /* Prend toute la largeur */
+        max-width: none; /* Supprime toute limitation de largeur maximale */
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: 0.8rem; /* Garde le même padding */
+        font-size: 16px; /* Évite le zoom sur iOS */
+    }
+    
+    .form-group textarea {
+        min-height: 150px; /* Garde la même hauteur minimale */
+    }
+}
+
+@media (max-width: 480px) {
+    .contact {
+        padding: 3rem 0; /* Réduit légèrement le padding vertical */
+    }
+    
+    .contact-form {
+        padding: 1.5rem; /* Réduit très légèrement le padding interne */
+        margin: 0 -10px; /* Compense le padding du container */
+    }
+}
 
         /* Footer */
         footer {
@@ -761,6 +826,16 @@
         }
 
         /* Responsive Design */
+        @media (max-width: 1100px) {
+            .header-container {
+                gap: 15px;
+            }
+            
+            nav ul li {
+                margin: 0 8px;
+            }
+        }
+
         @media (max-width: 992px) {
             .main-container {
                 flex-direction: column;
@@ -778,9 +853,43 @@
             .ad-container {
                 height: 250px;
             }
+            
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .logo-img {
+                height: 35px;
+                margin-right: 10px;
+            }
+        }
+
+        @media (max-width: 850px) {
+            nav ul li a {
+                font-size: 0.9rem;
+            }
+            
+            .logo {
+                font-size: 1.2rem;
+            }
         }
 
         @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: nowrap;
+                justify-content: space-between;
+            }
+            
+            .logo {
+                flex: 0 0 auto;
+            }
+            
+            nav {
+                order: 3;
+                flex: 0 0 100%;
+                margin-top: 15px;
+            }
+            
             nav ul {
                 position: fixed;
                 top: 70px;
@@ -792,6 +901,7 @@
                 padding: 20px 0;
                 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
                 transition: var(--transition);
+                z-index: 999;
             }
 
             nav ul.active {
@@ -799,7 +909,11 @@
             }
 
             nav ul li {
-                margin: 15px 0;
+                margin: 12px 0;
+            }
+            
+            nav ul li a {
+                font-size: 1rem;
             }
 
             .hamburger {
@@ -829,6 +943,15 @@
         }
         
         @media (max-width: 480px) {
+            .logo {
+                font-size: 1rem;
+            }
+            
+            .logo-img {
+                height: 30px;
+                margin-right: 8px;
+            }
+            
             .ad-container {
                 height: 180px;
             }
@@ -853,7 +976,18 @@
     <!-- Header & Navigation -->
     <header>
         <div class="container header-container">
-            <a href="#" class="logo">Benin<span>Monde</span>Sport</a>
+            <a href="#" class="logo">
+                <img src="images/bms9.png" alt="Logo Benin Monde Sport" class="logo-img">
+                Benin<span>Monde</span>Sport
+            </a>
+            <div class="header-right">
+                <div class="search-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
             <nav>
                 <ul>
                     <li><a href="#accueil">Accueil</a></li>
@@ -863,15 +997,8 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
-            <div class="search-icon">
-                <i class="fas fa-search"></i>
-            </div>
-            <div class="hamburger">
-                <i class="fas fa-bars"></i>
-            </div>
         </div>
     </header>
-
     <!-- Hero Section -->
     <section class="hero" id="accueil">
         <div class="container hero-content">
